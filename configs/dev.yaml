@@ -1,0 +1,36 @@
+aws:
+  region: eu-central-1
+  account_id: 111111111111
+s3:
+  raw_bucket: ml-dev-raw-data
+  features_bucket: ml-dev-features
+  artifacts_bucket: ml-dev-artifacts
+  monitoring_bucket: ml-dev-monitoring
+ecr:
+  registry: 111111111111.dkr.ecr.eu-central-1.amazonaws.com
+  repo: ml-inference
+sagemaker:
+  role_arn: arn:aws:iam::111111111111:role/SageMakerExecutionRole
+  instance_type: ml.m5.large
+mlflow:
+  tracking_uri: http://mlflow.dev.internal:5000
+  experiment_name: my-experiment-dev
+bedrock:
+  model_id: anthropic.claude-3-sonnet
+  max_tokens: 4096
+model:
+  name: my-model
+  version: latest
+  canary_traffic: 0.05
+  health_check_path: /health
+monitoring:
+  sample_rate: 0.01
+  drift_threshold: 0.05
+  latency_threshold_ms: 500
+  error_rate_threshold: 0.02
+cost:
+  monthly_budget_usd: 500
+  per_inference_limit_usd: 0.10
+logging:
+  level: DEBUG
+  cloudwatch_group: /aws/ml/dev

@@ -1,0 +1,44 @@
+name: CI Pipeline
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run unit tests
+        run: pytest tests/test_unit.py -v
+      - name: Run schema validation
+        run: pytest tests/test_schema.py -v
+      - name: Check code quality
+        run: |
+          flake8 src/ --max-line-length=100
+          black src/ --check
+      - name: Security scan
+        run: |
+          pip install bandit
+          bandit -r src/ -f json -o bandit-report.json
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: |
+            pytest-report.xml
+            bandit-report.json

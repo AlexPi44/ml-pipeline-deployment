@@ -1,0 +1,10 @@
+* @ml-team @infra-team
+/infra/ @infra-team
+/.github/workflows/ @infra-team @devops-team
+/src/train/ @ml-team
+/src/features/ @ml-team @data-team
+/src/inference/ @ml-team @backend-team
+/src/ingest/ @data-team
+/src/validation/ @data-team
+/pipelines/ @ml-team @data-team
+/docs/ @ml-team
