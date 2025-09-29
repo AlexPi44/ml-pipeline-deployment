@@ -1,2 +1,3 @@
 # ml-pipeline-deployment
-End to end MLOps Production Ready Project
+End to end MLOps Production Ready Project Structure
+
